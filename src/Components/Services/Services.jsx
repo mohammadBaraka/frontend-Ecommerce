@@ -2,11 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Services() {
-  const data = [
+  const dataServices = [
     {
       id: 1,
       title: "Services1",
       des: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
               felis ligula.`,
       img: "/images/about-1.jpg",
     },
@@ -15,6 +16,8 @@ export default function Services() {
       id: 2,
       title: "Services2",
       des: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
              felis ligula.`,
       img: "/images/about-1.jpg",
     },
@@ -23,6 +26,8 @@ export default function Services() {
       id: 3,
       title: "Services3",
       des: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
     felis ligula.`,
       img: "/images/about-1.jpg",
     },
@@ -30,22 +35,12 @@ export default function Services() {
   return (
     <>
       <h3 className="text-4xl text-center font-bold marginGlobal">Services</h3>
-      <section
-        className="flex flex-col justify-center items-center 
-      xl:flex xl:flex-row xl:justify-between gap-10
-      
-      
-      "
-      >
-        {data.map((item) => {
+      <section className="grid grid-cols-1 w-[100%]  xl:w-[90%] m-auto md:grid md:grid-cols-2 xl:grid xl:grid-cols-3">
+        {dataServices?.map((item) => {
           return (
-            <div
-              key={item.id}
-              className="marginGlobal relative flex w-10/12 flex-col rounded-xl bg-clip-border  shadow-md
-              "
-            >
+            <div key={item.id} className="marginGlobal relative mb-4">
               <div className="relative h-auto mx-6 -mt-6 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-teal-500 to-teal-600">
-                <Image src={item.img} alt="image" width={500} height={200} />
+                <Image src={item.img} alt="image" width={600} height={200} />
               </div>
               <div className="p-6">
                 <h5 className="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
@@ -55,12 +50,12 @@ export default function Services() {
                   {item.des}
                 </p>
               </div>
-              <div className="p-6 pt-0">
+              <div className="p-6 w-[100%]">
                 <Link href="/">
                   <button
                     data-ripple-light="true"
                     type="button"
-                    className="select-none rounded-lg bg-blue-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    className="absolute bottom-0  select-none rounded-lg bg-teal-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-teal-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   >
                     Read More
                   </button>

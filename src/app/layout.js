@@ -19,7 +19,6 @@ export default function RootLayout({ children }) {
         <StoreProvider>
           <ToggleThemeProvider>
             <Nav />
-
             <ToasterHandlingMessage />
             {children}
           </ToggleThemeProvider>

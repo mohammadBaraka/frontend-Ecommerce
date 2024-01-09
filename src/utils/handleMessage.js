@@ -29,3 +29,16 @@ export const msgConfirm = (msg, func) => {
     }
   });
 };
+// export const msgConfirm = (msg) => {
+//   swal({
+//     title: `Are you sure?`,
+//     text: msg,
+//     icon: "warning",
+//     buttons: true,
+//     dangerMode: true,
+//   }).then((willDelete) => {
+//     if (willDelete) {
+//       console.log("yes");
+//     }
+//   });
+// };

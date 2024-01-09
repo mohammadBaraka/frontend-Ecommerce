@@ -4,7 +4,7 @@ import * as React from "react";
 
 export const ThemeContext = React.createContext(null);
 
-export const ThemeProvider = ({ children }) => {
+export const ToggleThemeProvider = ({ children }) => {
   const [mode, setMode] = React.useState("dark");
   const toggle = () => {
     setMode((prev) => (prev === "dark" ? "light" : "dark"));

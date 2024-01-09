@@ -30,7 +30,7 @@ export default function Register() {
         return msgError(res?.error?.data.message || "Something went wrong");
       }
       msgSuccess(res?.data?.message || "Login successfully");
-      redirect("/");
+      router.push("/");
     });
   };
 

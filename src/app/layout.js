@@ -1,10 +1,10 @@
 import { Inter } from "next/font/google";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/Context/ToggleMode";
 import StoreProvider from "./lib/StoreProvider";
 import Nav from "@/Components/Nav/Nav";
 import ToasterHandlingMessage from "@/utils/ToasterHandlingMessage";
+import { ToggleThemeProvider } from "@/Context/ToggleMode";
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 export const metadata = {
@@ -16,15 +16,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <ThemeProvider>
-          <StoreProvider>
-            <div className="container m-auto px-6 min-h-screen">
-              <ToasterHandlingMessage />
-              <Nav />
-              {children}
-            </div>
-          </StoreProvider>
-        </ThemeProvider>
+        <StoreProvider>
+          <ToggleThemeProvider>
+            <Nav />
+
+            <ToasterHandlingMessage />
+            {children}
+          </ToggleThemeProvider>
+        </StoreProvider>
       </body>
     </html>
   );

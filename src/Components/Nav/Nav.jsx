@@ -1,111 +1,144 @@
 "use client";
+import React from "react";
+import { Navbar, Collapse, Button, IconButton } from "@material-tailwind/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import styles from "./Nav.module.css";
-import * as React from "react";
-import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-import { useAppSelector } from "@/app/lib/hooks";
+import Image from "next/image";
+import NavList from "./NavList";
 import { useGetTokenQuery, useLogoutMutation } from "@/app/lib/apis/authSlice";
 import Loader from "../Loader/Loader";
-import { redirect, usePathname } from "next/navigation";
 import { msgConfirm, msgError, msgSuccess } from "@/utils/handleMessage";
-export default function Nav() {
-  const [hidden, setHidden] = React.useState(true);
-  const { data, isSuccess, isLoading } = useGetTokenQuery();
-  const [logout, { isLoading: logoutLoading }] = useLogoutMutation();
-  const cart = useAppSelector((state) => state.cart);
-  const isAdmin = data?.user && data?.user !== undefined ? true : false;
-  const pathName = usePathname();
-  //?==========VAIDATE IF THE USER ADMIN OR NOT OR IS LOGED IN==========
-  // if (pathName === "/dashboard" && !isAdmin) return redirect("/404");
-  if (pathName === "/login" && data?.user !== undefined) return redirect("/");
-  if (pathName === "/register" && data?.user !== undefined)
-    return redirect("/");
+import { redirect, usePathname } from "next/navigation";
 
+export default function Nav() {
+  const { data, isSuccess, isError, erro, isLoading } = useGetTokenQuery();
+  const [logout, { data: logoutData, isLoading: logoutLoading }] =
+    useLogoutMutation();
+  const path = usePathname();
+  if (path === "/dashboard" && data?.user !== undefined && !data?.user)
+    return redirect("/404");
+  const [openNav, setOpenNav] = React.useState(false);
+  React.useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => window.innerWidth >= 960 && setOpenNav(false)
+    );
+  }, []);
   const handleLogout = () => {
     logout().then((res) => {
-      if (res?.error?.status === 400) {
-        return msgError(res?.error?.data.message || "Something went wrong");
-      }
-      msgSuccess(res?.data?.message || "Logout successfully");
+      msgSuccess(res?.data?.message || "Logout Success");
     });
   };
 
   return (
     <>
-      {isLoading || logoutLoading ? <Loader /> : null}
-      <section className="flex justify-center gap-10 items-center p-3 xl:flex xl:justify-between xl:items-center relative">
-        <div className="font-bold font-mono text-3xl">
-          <h2>Logo</h2>
-        </div>
-        <div>
-          <ul
-            className={`${
-              hidden
-                ? `hidden`
-                : `fixed left-0 top-0 bg-transparent h-full bg-black shadow-inherit py-4 px-28 text-center -m-90 `
-            }   xl:flex xl:justify-between xl:gap-5 xl:font-bold xl:text-xl xl:static xl:bg- xl:shadow-none xl:bg-transparent xl:w-full `}
-          >
-            <Link href="/">
-              <li>About</li>
-            </Link>
-            <Link href="/">
-              <li>Services</li>
-            </Link>
-            <Link href="/product">
-              <li>Products</li>
-            </Link>
-            <Link href="/cart">
-              <li>Cart {cart.length}</li>
-            </Link>
-          </ul>
-        </div>
-        <div className="flex justify-center items-center gap-3">
-          <ToggleSwitch />
+      {isLoading && <Loader />}
 
-          {isAdmin && isSuccess && (
-            <Link href="/dashboard" className={styles.button}>
-              Daasboard
-              <div className={styles.arrow_wrapper}>
-                <div className={styles.arrow}></div>
-              </div>
+      <div>
+        <Navbar className="mx-auto max-w-[100%] px-4 py-2">
+          <div className="flex items-center justify-between text-blue-gray-900 px-4">
+            <Link href="/">
+              <h6 className="mr-4 cursor-pointer py-1.5 lg:ml-2">
+                <Image
+                  src="/images/logo.png"
+                  alt="logo"
+                  width={50}
+                  height={50}
+                />
+              </h6>
             </Link>
-          )}
-          {isSuccess ? (
-            <button
-              className={styles.Btn}
-              onClick={() => msgConfirm("Want To Logout", handleLogout)}
+
+            <div className="hidden lg:block">
+              <NavList />
+            </div>
+            {isSuccess ? (
+              <div className="hidden gap-2 lg:flex">
+                {data?.user && isSuccess && (
+                  <Link href="/dashboard">
+                    <Button variant="outlined" size="md" color="teal" fullWidth>
+                      Dashboadrd
+                    </Button>
+                  </Link>
+                )}
+
+                <Button
+                  onClick={() => msgConfirm("Want To Log Out!", handleLogout)}
+                  variant="gradient"
+                  size="md"
+                  color="red"
+                  fullWidth
+                >
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <div className="hidden gap-2 lg:flex">
+                <Link href="/login">
+                  <Button variant="outlined" size="md" color="red" fullWidth>
+                    Log In
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button variant="gradient" size="md" color="teal" fullWidth>
+                    Sign In
+                  </Button>
+                </Link>
+              </div>
+            )}
+            <IconButton
+              variant="text"
+              color="blue-gray"
+              className="lg:hidden"
+              onClick={() => setOpenNav(!openNav)}
             >
-              <div className={styles.sign}>
-                <svg viewBox="0 0 512 512">
-                  <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
-                </svg>
-              </div>
-
-              <div className={styles.text}>Logout</div>
-            </button>
-          ) : (
-            <Link href="/register" className={styles.button}>
-              Sign up
-              <div className={styles.arrow_wrapper}>
-                <div className={styles.arrow}></div>
-              </div>
-            </Link>
-          )}
-
-          <div className="xl:hidden">
-            <label className={styles.burger} htmlFor="burger">
-              <input
-                type="checkbox"
-                id="burger"
-                onClick={() => setHidden((prev) => !prev)}
-              />
-              <span></span>
-              <span></span>
-              <span></span>
-            </label>
+              {openNav ? (
+                <XMarkIcon className="h-6 w-6" strokeWidth={2} />
+              ) : (
+                <Bars3Icon className="h-6 w-6" strokeWidth={2} />
+              )}
+            </IconButton>
           </div>
-        </div>
-      </section>
+          <Collapse open={openNav}>
+            <NavList />
+            {isSuccess ? (
+              <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
+                {data?.user && isSuccess && (
+                  <Link href="/dashboard">
+                    <Button variant="outlined" size="sm" color="teal" fullWidth>
+                      Dashboard
+                    </Button>
+                  </Link>
+                )}
+
+                <div>
+                  <Button
+                    variant="gradient"
+                    size="sm"
+                    color="red"
+                    fullWidth
+                    onClick={() => msgConfirm("Want To Log Out!", handleLogout)}
+                  >
+                    Logout
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
+                <Link href="/login">
+                  <Button variant="outlined" size="sm" color="red" fullWidth>
+                    Log In
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button variant="gradient" size="sm" color="teal" fullWidth>
+                    Sign In
+                  </Button>
+                </Link>
+              </div>
+            )}
+          </Collapse>
+        </Navbar>
+      </div>
     </>
   );
 }

@@ -11,6 +11,13 @@ export const productSlice = createApi({
       query: () => "product",
       providesTags: ["product"],
     }),
+    getProductByCategory: builder.mutation({
+      query: (category) => ({
+        url: `product?categories=${category}`,
+        method: "GET",
+      }),
+      providesTags: ["product"],
+    }),
     createProduct: builder.mutation({
       query: (inputs) => ({
         url: "product",
@@ -42,4 +49,5 @@ export const {
   useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  useGetProductByCategoryMutation,
 } = productSlice;

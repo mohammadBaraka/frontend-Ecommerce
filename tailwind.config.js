@@ -33,8 +33,13 @@ module.exports = withMT({
   ],
   theme: {
     extend: {
-      color: {
-        primary: "green",
+      backgroundColor: (theme) => ({
+        ...theme("colors"),
+        primary: "#38ada9",
+        secondary: "#45c5c1",
+      }),
+      colors: {
+        primary: "#38ada9",
       },
     },
   },

@@ -7,7 +7,7 @@ export default function ToasterHandlingMessage() {
   return (
     <>
       <Toaster
-        position="bottom-right"
+        position="top-right"
         toastOptions={{
           className: "",
           style: {

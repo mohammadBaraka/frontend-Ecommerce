@@ -92,7 +92,7 @@ export default function AddCategory() {
       {isLoading || loadingCategory || updatedLoading || deletedLoading ? (
         <Loader />
       ) : null}
-      <div className="w-full flex justify-center">
+      <div className="flex justify-center">
         <section className="flex flex-col items-center justify-center xl:flex xl:flex-row xl:justify-between xl:items-center">
           <form className={styles.form} onSubmit={handleSubmit}>
             <p className={styles.title}>

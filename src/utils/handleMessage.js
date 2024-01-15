@@ -9,13 +9,6 @@ export const msgError = (msg) => {
   toast.error(msg);
 };
 
-// export const msgConfirm = (info, message, func) => {
-//   awn.confirm(`Are You Sure ${info}`, async () => {
-//     awn.info(message);
-//     await func();
-//   });
-// };
-
 export const msgConfirm = (msg, func) => {
   swal({
     title: `Are you sure?`,
@@ -29,16 +22,16 @@ export const msgConfirm = (msg, func) => {
     }
   });
 };
-// export const msgConfirm = (msg) => {
-//   swal({
-//     title: `Are you sure?`,
-//     text: msg,
-//     icon: "warning",
-//     buttons: true,
-//     dangerMode: true,
-//   }).then((willDelete) => {
-//     if (willDelete) {
-//       console.log("yes");
-//     }
-//   });
-// };
+
+export const msgInfo = (msgTitle, msg, func) => {
+  swal({
+    title: msgTitle,
+    text: msg,
+    icon: "info",
+    buttons: true,
+  }).then((res) => {
+    if (res) {
+      func();
+    }
+  });
+};

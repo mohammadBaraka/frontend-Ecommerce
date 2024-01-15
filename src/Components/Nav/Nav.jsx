@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import * as React from "react";
 import { Navbar, Collapse, Button, IconButton } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -7,16 +7,15 @@ import Image from "next/image";
 import NavList from "./NavList";
 import { useGetTokenQuery, useLogoutMutation } from "@/app/lib/apis/authSlice";
 import Loader from "../Loader/Loader";
-import { msgConfirm, msgError, msgSuccess } from "@/utils/handleMessage";
-import { redirect, usePathname } from "next/navigation";
-
+import { msgConfirm, msgSuccess } from "@/utils/handleMessage";
+import { redirect, usePathname, useRouter } from "next/navigation";
 export default function Nav() {
-  const { data, isSuccess, isError, erro, isLoading } = useGetTokenQuery();
-  const [logout, { data: logoutData, isLoading: logoutLoading }] =
-    useLogoutMutation();
+  const router = useRouter();
   const path = usePathname();
-  if (path === "/dashboard" && data?.user !== undefined && !data?.user)
-    return redirect("/404");
+  const { data, isSuccess, isLoading } = useGetTokenQuery();
+  const [logout, { isLoading: logoutLoading }] = useLogoutMutation();
+  if (path === "/dashboard" && !data?.user) return redirect("/404");
+
   const [openNav, setOpenNav] = React.useState(false);
   React.useEffect(() => {
     window.addEventListener(
@@ -28,11 +27,14 @@ export default function Nav() {
     logout().then((res) => {
       msgSuccess(res?.data?.message || "Logout Success");
     });
+    setTimeout(() => {
+      router.push("/login");
+    }, 2000);
   };
 
   return (
     <>
-      {isLoading && <Loader />}
+      {isLoading || logoutLoading ? <Loader /> : null}
 
       <div>
         <Navbar className="mx-auto max-w-[100%] px-4 py-2">

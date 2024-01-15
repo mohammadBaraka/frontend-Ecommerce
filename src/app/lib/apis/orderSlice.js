@@ -6,13 +6,21 @@ export const orderSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: mainUrl,
   }),
-  tagTypes: ["category"],
+  tagTypes: ["Order"],
   endpoints: (builder) => ({
     getOrder: builder.query({
       query: () => `order`,
-      providesTags: ["category"],
+      providesTags: ["Order"],
+    }),
+    createOrder: builder.mutation({
+      query: (inputs) => ({
+        url: "order",
+        method: "POST",
+        body: inputs,
+      }),
+      invalidatesTags: ["Order"],
     }),
   }),
 });
 
-export const { useGetOrderQuery } = orderSlice;
+export const { useGetOrderQuery, useCreateOrderMutation } = orderSlice;

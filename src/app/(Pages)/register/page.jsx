@@ -37,15 +37,13 @@ export default function Register() {
       router.push("/login");
     });
   };
-  console.log(inputs);
 
   return (
     <>
       {isLoading && <Loader />}
       <section
-        className="flex flex-col items-center justify-center marginGlobal
-
-    xl:flex xl:flex-row xl:justify-between xl:items-center"
+        className="flex justify-center items-center
+      xl:grid xl:grid-cols-2 xl:w-[90%] m-auto marginGlobal"
       >
         <form className={styles.form} onSubmit={handleSubmit}>
           <p className={styles.title}>Register </p>

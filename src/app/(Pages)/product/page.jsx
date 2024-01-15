@@ -16,7 +16,7 @@ import * as React from "react";
 import { useGetTokenQuery } from "@/app/lib/apis/authSlice";
 import Loader from "@/Components/Loader/Loader";
 import { useRouter } from "next/navigation";
-import { msgConfirm } from "@/utils/handleMessage";
+import { msgInfo, msgSuccess } from "@/utils/handleMessage";
 import {
   useGetProductByCategoryMutation,
   useGetProductQuery,
@@ -24,18 +24,22 @@ import {
 
 export default function Products() {
   const router = useRouter();
-  const { data: token, isLoading, isError } = useGetTokenQuery(null);
+  const { data: token, isLoading, isError } = useGetTokenQuery();
   const { data: ctaegories, isLoading: categoriesLoading } =
-    useGetCategoriesQuery(null);
-  const { data: products, isLoading: productLoading } =
-    useGetProductQuery(null);
+    useGetCategoriesQuery();
+
+  const { data: products, isLoading: productLoading } = useGetProductQuery();
+
   const [getProductByCategory, { data: category }] =
     useGetProductByCategoryMutation();
-  console.log("🚀 ~ Products ~ category:", category);
 
   const dispatch = useAppDispatch();
   const loginPage = () => {
     router.push("/login");
+  };
+  const msgAddToCart = (product) => {
+    dispatch(addToCart(product));
+    msgSuccess("Product Added Success!");
   };
   const porductShow = category?.data ? category?.data : products?.data;
   return (
@@ -44,7 +48,7 @@ export default function Products() {
       <h3 className="text-2xl text-center my-8 font-Bold ">
         Filter By Category
       </h3>
-      <div className="flex flex-col justify-center xl:flex-row  xl:gap-4 border-2 border-teal-400 w-fit px-4 py-2 m-auto rounded-xl">
+      <div className="grid grid-cols-4 w-[95%] justify-center xl:flex-row  xl:gap-4 border-2 border-teal-400 xl:w-fit px-4 py-2 m-auto rounded-xl">
         <Radio
           defaultChecked
           label="All Products"
@@ -77,11 +81,13 @@ export default function Products() {
             return (
               <Card className="w-[100%] h-[100%] relative" key={product?.id}>
                 <CardHeader shadow={false} floated={false} className="h-96">
-                  <img
-                    src={product?.image}
-                    alt={product?.name}
-                    className="h-full w-full"
-                  />
+                  <Link href={`/product/${product.id}`}>
+                    <img
+                      src={product?.image}
+                      alt={product?.name}
+                      className="h-full w-full"
+                    />
+                  </Link>
                 </CardHeader>
                 <CardBody>
                   <div className="mb-2 flex items-center justify-between">
@@ -105,8 +111,13 @@ export default function Products() {
                     <Button
                       onClick={
                         isError
-                          ? () => msgConfirm("You Should Login", loginPage)
-                          : () => dispatch(addToCart(product))
+                          ? () =>
+                              msgInfo(
+                                "Unothorized",
+                                "You Should Login To Ordering...",
+                                loginPage
+                              )
+                          : () => msgAddToCart(product)
                       }
                       ripple={false}
                       fullWidth={true}

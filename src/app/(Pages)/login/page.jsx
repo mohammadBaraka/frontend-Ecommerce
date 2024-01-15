@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from "../register/Register.module.css";
 import * as React from "react";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useLoginMutation } from "@/app/lib/apis/authSlice";
 import Loader from "@/Components/Loader/Loader";
 import { msgSuccess, msgError } from "../../../utils/handleMessage";
@@ -39,11 +39,10 @@ export default function Register() {
       {/* Validatin For Login Mutation  */}
       {isLoading && <Loader />}
       <section
-        className="flex flex-col items-center justify-center marginGlobal
-
-    xl:flex xl:flex-row xl:justify-between xl:items-center"
+        className="flex justify-center items-center m-auto w-[100%] marginGlobal
+       xl:grid xl:grid-cols-2 xl:w-[90%] "
       >
-        <form className={`${styles.form} w-8/12`} onSubmit={handleSubmit}>
+        <form className={`${styles.form} w-[100%]`} onSubmit={handleSubmit}>
           <p className={styles.title}>Login </p>
           <p className={styles.message}>
             Signin now and get full access to our app.

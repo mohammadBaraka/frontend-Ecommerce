@@ -8,7 +8,7 @@ export default function Inputs({
   return (
     <>
       <p className={styles.title}>
-        {updateMode ? "Update Product" : "Add Product"}{" "}
+        {updateMode ? "Update Product" : "Add Product"}
       </p>
       <select
         onChange={handleChange}

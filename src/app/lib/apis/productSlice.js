@@ -46,6 +46,13 @@ export const productSlice = createApi({
       }),
       invalidatesTags: ["product"],
     }),
+    gallery: builder.mutation({
+      query: ({ id, images }) => ({
+        url: `product/gallery/${id}`,
+        method: "PUT",
+        body: images,
+      }),
+    }),
   }),
 });
 export const {
@@ -55,4 +62,5 @@ export const {
   useDeleteProductMutation,
   useGetProductByCategoryMutation,
   useLazyGetProductByIdQuery,
+  useGalleryMutation,
 } = productSlice;

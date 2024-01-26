@@ -6,6 +6,7 @@ import { useLazyGetProductByIdQuery } from "@/app/lib/apis/productSlice";
 import Loader from "@/Components/Loader/Loader";
 export default function ProductDetails() {
   const [getProductById, { data, isLoading }] = useLazyGetProductByIdQuery();
+  const [image, setImage] = React.useState(null);
   const product = data?.data;
 
   const { id } = useParams();
@@ -13,6 +14,20 @@ export default function ProductDetails() {
   React.useEffect(() => {
     getProductById(id);
   }, []);
+  const showImages = (src) => {
+    setImage(src);
+  };
+  const images = product?.images.map((image, index) => {
+    return (
+      <img
+        src={image}
+        alt={product.name}
+        key={index}
+        className="w-16 h-16 rounded-full cursor-pointer"
+        onClick={() => showImages(image)}
+      />
+    );
+  });
 
   return (
     <>
@@ -24,7 +39,7 @@ export default function ProductDetails() {
               <div className="h-[560px] rounded-lg light:bg-white dark:bg-gray-700 mb-4">
                 <img
                   className="w-full h-full"
-                  src={product?.image}
+                  src={image === null ? product?.image : image}
                   alt={product?.name}
                 />
               </div>
@@ -83,22 +98,14 @@ export default function ProductDetails() {
                 <span className="font-bold text-gray-700 dark:text-gray-300">
                   Select Size:
                 </span>
-                <div className="flex items-center mt-2">
-                  <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                    S
-                  </button>
-                  <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                    M
-                  </button>
-                  <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                    L
-                  </button>
-                  <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                    XL
-                  </button>
-                  <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                    XXL
-                  </button>
+                <div className="flex items-center mt-2 gap-4">
+                  <img
+                    className="w-16 h-16 rounded-full cursor-pointer"
+                    src={product?.image}
+                    alt={product?.name}
+                    onClick={() => setImage(product.image)}
+                  />
+                  {images}
                 </div>
               </div>
               <div>

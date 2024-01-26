@@ -12,7 +12,6 @@ import {
   Radio,
 } from "@material-tailwind/react";
 import Link from "next/link";
-import * as React from "react";
 import { useGetTokenQuery } from "@/app/lib/apis/authSlice";
 import Loader from "@/Components/Loader/Loader";
 import { useRouter } from "next/navigation";

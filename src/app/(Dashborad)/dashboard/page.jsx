@@ -1,5 +1,8 @@
-import { UserCircleIcon } from "@heroicons/react/24/solid";
-import { mainData } from "./data-sections/maind_data_section";
+"use client";
+import ChartLine from "./Chart/LineChart";
+import ChartColumn from "./Chart/BarChart.";
+import { mainData } from "./utils/MainData";
+import PieChart from "./Chart/PieChart";
 
 export default function Dashboard() {
   return (

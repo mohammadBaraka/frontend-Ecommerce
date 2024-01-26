@@ -147,6 +147,7 @@ export default function AddCategory() {
         categories={categories?.data}
         handleEdit={handleEdit}
         hndleDelete={hndleDelete}
+        handleReset={handleReset}
       />
     </>
   );

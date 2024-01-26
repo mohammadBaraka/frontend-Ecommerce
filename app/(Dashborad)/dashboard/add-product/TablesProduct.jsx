@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { Button } from "@material-tailwind/react";
 import Link from "next/link";
-import PaginatedItems from "../utils/Paginate";
+import PaginatedItems from "@/utils/Paginate";
 import { Select, Option } from "@material-tailwind/react";
 import * as React from "react";
 export default function Table({

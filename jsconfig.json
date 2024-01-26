@@ -1,14 +1,7 @@
 {
-  
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"],
-      
-    },
-   
-    "jsx": "react-jsxdev",
-    "allowJs": true,
-  },
-  
-  
+      "@/*": ["./*"]
+    }
+  }
 }

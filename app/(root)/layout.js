@@ -1,10 +1,10 @@
 import { Inter } from "next/font/google";
 import { Roboto } from "next/font/google";
-import "./globals.css";
-import StoreProvider from "./lib/StoreProvider";
+import "../globals.css";
 import Nav from "@/Components/Nav/Nav";
 import ToasterHandlingMessage from "@/utils/ToasterHandlingMessage";
 import { ToggleThemeProvider } from "@/Context/ToggleMode";
+import StoreProvider from "../lib/StoreProvider";
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 export const metadata = {

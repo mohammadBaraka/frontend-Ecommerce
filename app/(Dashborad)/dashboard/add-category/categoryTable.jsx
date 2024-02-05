@@ -1,4 +1,4 @@
-import { msgConfirm } from "@/utils/handleMessage";
+import { msgConfirm } from "../../../../utils/handleMessage";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Button } from "@material-tailwind/react";
 export default function CategoryTable({

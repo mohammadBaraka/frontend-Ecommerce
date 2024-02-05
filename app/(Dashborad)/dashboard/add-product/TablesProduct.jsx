@@ -1,5 +1,5 @@
 "use clint";
-import { msgConfirm } from "@/utils/handleMessage";
+import { msgConfirm } from "../../../../utils/handleMessage";
 import {
   EyeIcon,
   PencilSquareIcon,
@@ -7,20 +7,18 @@ import {
 } from "@heroicons/react/24/outline";
 import { Button } from "@material-tailwind/react";
 import Link from "next/link";
-import PaginatedItems from "@/utils/Paginate";
+import PaginatedItems from "../../../../utils/Paginate";
 import { Select, Option } from "@material-tailwind/react";
-import * as React from "react";
 export default function Table({
   products,
   handleEdit,
   handleDelete,
   handleReset,
+  totalProducts,
+  setPage,
+  setLimit,
 }) {
-  const [page, setPage] = React.useState(1);
-  const [limit, setLimit] = React.useState(3);
-  const start = (page - 1) * limit;
-  const end = start + limit;
-  const items = products?.slice(start, end);
+  console.log("🚀 ~ currentPage:", totalProducts);
 
   return (
     <div className="w-[100%] flex justify-center items-center mt-10 ">
@@ -79,7 +77,7 @@ export default function Table({
               </thead>
 
               <tbody>
-                {items?.map((product, index) => {
+                {products?.map((product, index) => {
                   return (
                     <tr key={product.id} className="hover:bg-gray-200">
                       <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4 text-center text-blueGray-700">
@@ -193,19 +191,15 @@ export default function Table({
                   variant="outlined"
                   label="Limit Of Products"
                 >
-                  <Option value={"3"}>3</Option>
-                  <Option value={"6"}>6</Option>
-                  <Option value={"9"}>9</Option>
-                  <Option value={"12"}>12</Option>
+                  <Option value={"10"}>10</Option>
+                  <Option value={"13"}>13</Option>
                   <Option value={"15"}>15</Option>
+                  <Option value={"18"}>18</Option>
+                  <Option value={"20"}>20</Option>
                 </Select>
               </div>
 
-              <PaginatedItems
-                products={products}
-                itemsPerPage={limit}
-                setPage={setPage}
-              />
+              <PaginatedItems total={totalProducts} setPage={setPage} />
             </div>
           </div>
         </div>

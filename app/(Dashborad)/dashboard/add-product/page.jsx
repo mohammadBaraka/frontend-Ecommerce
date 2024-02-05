@@ -5,21 +5,23 @@ import styles from "./AddProduct.module.css";
 import Table from "./TablesProduct";
 import Inputs from "./Inputs";
 import InputFile from "./InputFile";
-import { useGetCategoriesQuery } from "@/app/lib/apis/categoriesSlice";
-import Loader from "@/Components/Loader/Loader";
+import { useGetCategoriesQuery } from "../../../../app/lib/apis/categoriesSlice";
+import { useGetCategoriesQuery } from "../../../lib/apis/categoriesSlice";
+import Loader from "../../../../Components/Loader/Loader";
 import {
   useCreateProductMutation,
   useDeleteProductMutation,
   useGalleryMutation,
-  useGetProductQuery,
   useUpdateProductMutation,
-} from "@/app/lib/apis/productSlice";
-import { msgError, msgSuccess } from "@/utils/handleMessage";
+  useGetProductQuery,
+  useGetProductByCategoryMutation,
+  useLazyGetProductByIdQuery,
+} from "../../../../app/lib/apis/productSlice";
+import { msgError, msgSuccess } from "../../../../utils/handleMessage";
 import { Button } from "@material-tailwind/react";
 
 export default function AddProducts() {
-  const { data: categories, isLoading } = useGetCategoriesQuery();
-  const { data: products, isLoading: productLoading } = useGetProductQuery();
+  const { data: categories, isLoading } = useGetCategoriesQuery(null);
   const [createProduct, { isLoading: loadingProduct }] =
     useCreateProductMutation();
   const [deleteProduct, { isLoading: deletedLoading }] =
@@ -31,6 +33,8 @@ export default function AddProducts() {
 
   const [updateMode, setUpdateMode] = React.useState(false);
   const [moreImages, SetMoreImages] = React.useState([]);
+  const [page, setPage] = React.useState(1);
+  const [limit, setLimit] = React.useState(10);
   const [inputs, setInputs] = React.useState({
     id: "",
     name: "",
@@ -43,6 +47,11 @@ export default function AddProducts() {
     countInstock: 0,
     isFeatured: false,
     images: null,
+  });
+  const { data: productsData, isLoading: loadingProucts } = useGetProductQuery({
+    limit,
+    page,
+    categories: "",
   });
 
   const handleChange = (e) => {
@@ -76,7 +85,6 @@ export default function AddProducts() {
   };
 
   const handleSubmit = (e) => {
-    const isFeatured = inputs.isFeatured === "true" ? true : false;
     e.preventDefault();
     const formData = new FormData();
     formData.append("name", inputs.name);
@@ -87,7 +95,7 @@ export default function AddProducts() {
     formData.append("price", inputs.price);
     formData.append("category", inputs.category);
     formData.append("countInstock", inputs.countInstock);
-    formData.append("isFeatured", isFeatured);
+    formData.append("isFeatured", inputs.isFeatured);
 
     if (updateMode) {
       const id = inputs.id;
@@ -180,7 +188,7 @@ export default function AddProducts() {
       loadingProduct ||
       deletedLoading ||
       updateLoading ||
-      productLoading ? (
+      galleryLoading ? (
         <Loader />
       ) : null}
 
@@ -197,7 +205,6 @@ export default function AddProducts() {
             <InputFile
               inputs={inputs}
               changeImages={(e) => SetMoreImages([...e.target.files])}
-              moreImages={moreImages}
               handleChange={handleChange}
             />
 
@@ -239,11 +246,13 @@ export default function AddProducts() {
         {/*//?======================TABLE====================== */}
       </div>
       <Table
-        products={products?.data}
+        products={productsData?.data}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
-        product={handleEdit}
+        totalProducts={productsData?.totalProducts}
         handleReset={handleReset}
+        setPage={setPage}
+        setLimit={setLimit}
       />
     </>
   );

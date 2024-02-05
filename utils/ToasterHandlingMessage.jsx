@@ -1,9 +1,9 @@
 "use client";
 import { Toaster } from "react-hot-toast";
 import * as React from "react";
-import { ThemeContext } from "@/Context/ToggleMode";
+// import { ThemeContext } from "@/Context/ToggleMode";
 export default function ToasterHandlingMessage() {
-  const { mode } = React.useContext(ThemeContext);
+  // const { mode } = React.useContext(ThemeContext);
   return (
     <>
       <Toaster
@@ -11,8 +11,8 @@ export default function ToasterHandlingMessage() {
         toastOptions={{
           className: "",
           style: {
-            color: `${mode === "dark" ? "#fff" : "#333"}`,
-            backgroundColor: `${mode === "dark" ? "#333" : "#fff"}`,
+            color: "#333",
+            backgroundColor: "#fff",
             width: "300px",
           },
         }}

@@ -1,10 +1,11 @@
 "use client";
-import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
-import { clear, deleteFromCart } from "@/app/lib/slices/CartSlise";
-import { msgConfirm } from "@/utils/handleMessage";
+import { useAppDispatch, useAppSelector } from "../../../../app/lib/hooks";
+import { clear, deleteFromCart } from "../../../../app/lib/slices/CartSlise";
+import { msgConfirm } from "../../../../utils/handleMessage";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
 import Link from "next/link";
+
 export default function Cart() {
   const carts = useAppSelector((state) => state.cart);
   const totalPrice = carts.reduce((acc, product) => {
@@ -17,6 +18,7 @@ export default function Cart() {
   const clearAll = () => {
     dispatch(clear());
   };
+
   return (
     <div>
       <section className="">

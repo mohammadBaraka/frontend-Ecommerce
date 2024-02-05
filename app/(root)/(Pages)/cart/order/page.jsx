@@ -1,12 +1,18 @@
 "use client";
 import styles from "../../register/Register.module.css";
-import { useGetTokenQuery } from "@/app/lib/apis/authSlice";
-import { useCreateOrderMutation } from "@/app/lib/apis/orderSlice";
-import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
-import { clear } from "@/app/lib/slices/CartSlise";
-import { msgError, msgSuccess } from "@/utils/handleMessage";
+import { useCreateOrderMutation } from "../../../../../app/lib/apis/orderSlice";
+import { useAppDispatch, useAppSelector } from "../../../../../app/lib/hooks";
+import { msgError, msgSuccess } from "../../../../../utils/handleMessage";
+import Loader from "../../../../../Components/Loader/Loader";
+import { CheckBadgeIcon, CreditCardIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
 import * as React from "react";
+import StripeCheckout from "react-stripe-checkout";
+import { Button } from "@material-tailwind/react";
+import { useGetTokenQuery } from "../../../../lib/apis/authSlice";
+import { clear } from "../../../../lib/slices/CartSlise";
 
+const KEY = process.env.NEXT_PUBLIC_REACT_APP_KEY;
 export default function Ordering() {
   const dispatch = useAppDispatch();
   const { data: userData, isLoading: loadingData } = useGetTokenQuery();
@@ -14,6 +20,10 @@ export default function Ordering() {
   const [createOrder, { data, isError, isLoading, isSuccess }] =
     useCreateOrderMutation();
   const carts = useAppSelector((state) => state.cart);
+  const totalPrice = carts.reduce((acc, product) => {
+    acc += product.price * product.quantity;
+    return acc;
+  }, 0);
   const orderItems = carts.map((item) => {
     const order = {
       quantity: item?.quantity,
@@ -32,17 +42,17 @@ export default function Ordering() {
     phone: "",
     user: userId,
   });
-  console.log(inputs, "inputs");
 
   const handleChange = (e) => {
+    e.preventDefault();
     setInputs((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
   const handleSubmit = (e) => {
-    e.preventDefault();
     createOrder(inputs).then((res) => {
+      console.log(res);
       if (res?.error?.status === 500)
         return msgError("All Failds Are Reauired");
       dispatch(clear());
@@ -52,9 +62,10 @@ export default function Ordering() {
 
   return (
     <>
+      {isLoading || loadingData ? <Loader /> : null}
       {carts.length > 0 ? (
         <section className="flex justify-center items-center marginGlobal">
-          <form className={styles.form} onSubmit={handleSubmit}>
+          <form className={styles.form} onClick={(e) => e.preventDefault()}>
             <p className={styles.title}>Ordering </p>
             <p className={styles.message}>Cash On Deleviry</p>
             <div className={styles.flex}>
@@ -128,12 +139,30 @@ export default function Ordering() {
               </label>
             </div>
 
-            <button className={styles.submit}>Submit</button>
+            <StripeCheckout
+              name="E-commerce"
+              image="/images/logo.png"
+              currncy="USD"
+              amount={totalPrice * 100}
+              stripeKey={KEY}
+              token={handleSubmit}
+            >
+              <button className={`${styles.submit} flex gap-2 items-center`}>
+                Pay Now <CreditCardIcon className="w-6 h-6" />
+              </button>
+            </StripeCheckout>
           </form>
         </section>
       ) : (
-        <div className="flex justify-center marginGlobal text-2xl font-bold">
-          No Products To Ordering...
+        <div className="flex flex-col justify-center items-center gap-2 marginGlobal p-5">
+          <CheckBadgeIcon className="w-28 h-w-28 text-primary" />
+          <div className="text-3xl font-bold text-gray-600">Thank you!</div>
+          <div className="font-bold text-xl text-green-500">
+            Pyment Has Been Success!
+          </div>
+          <Link href={"/product"}>
+            <Button variant="full">continue shopping</Button>
+          </Link>
         </div>
       )}
     </>

@@ -4,9 +4,9 @@ import styles from "../register/Register.module.css";
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useLoginMutation } from "@/app/lib/apis/authSlice";
 import Loader from "@/Components/Loader/Loader";
-import { msgSuccess, msgError } from "../../../utils/handleMessage";
+import { msgSuccess, msgError } from "../../../../utils/handleMessage";
+import { useLogoutMutation } from "../../../lib/apis/authSlice";
 export default function Register() {
   const router = useRouter();
   const [inputs, setInputs] = React.useState({

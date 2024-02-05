@@ -4,15 +4,19 @@ import {
   useDeleteCategoryMutation,
   useGetCategoriesQuery,
   useUpdateCategoryMutation,
-} from "@/app/lib/apis/categoriesSlice";
+} from "../../../../app/lib/apis/categoriesSlice";
 import styles from "./category.module.css";
 import * as React from "react";
-import Loader from "@/Components/Loader/Loader";
-import { msgConfirm, msgError, msgSuccess } from "@/utils/handleMessage";
+import Loader from "../../../../Components/Loader/Loader";
+import {
+  msgConfirm,
+  msgError,
+  msgSuccess,
+} from "../../../../utils/handleMessage";
 import CategoryTable from "./categoryTable";
 export default function AddCategory() {
   // ?==================QUERY AND MUTATION====================
-  const { data: categories, isLoading } = useGetCategoriesQuery();
+  const { data: categories, isLoading } = useGetCategoriesQuery(null);
   const [createCategory, { isLoading: loadingCategory }] =
     useCreateCategoryMutation();
 

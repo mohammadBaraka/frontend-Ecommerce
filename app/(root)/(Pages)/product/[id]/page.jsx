@@ -2,8 +2,8 @@
 import { useParams } from "next/navigation";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import * as React from "react";
-import { useLazyGetProductByIdQuery } from "@/app/lib/apis/productSlice";
-import Loader from "@/Components/Loader/Loader";
+import { useLazyGetProductByIdQuery } from "../../../../lib/apis/productSlice";
+import Loader from "../../../../../Components/Loader/Loader";
 export default function ProductDetails() {
   const [getProductById, { data, isLoading }] = useLazyGetProductByIdQuery();
   const [image, setImage] = React.useState(null);

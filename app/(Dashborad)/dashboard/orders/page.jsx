@@ -1,10 +1,10 @@
 "use client";
-import { useGetOrderQuery } from "@/app/lib/apis/orderSlice";
+import * as React from "react";
+import { useGetOrderQuery } from "../../../../app/lib/apis/orderSlice";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
-import * as React from "react";
 export default function Orders() {
-  const { data, isSuccess, isError } = useGetOrderQuery();
+  const { data, isLoading } = useGetOrderQuery(null);
 
   const [productDeatails, setProductDetails] = React.useState(false);
 

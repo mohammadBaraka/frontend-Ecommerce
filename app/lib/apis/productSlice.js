@@ -1,34 +1,41 @@
-import { mainUrl } from "@/utils/mainUrl";
+import { mainUrl } from "../../../utils/mainUrl";
+
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const productSlice = createApi({
   reducerPath: "productSlice",
   baseQuery: fetchBaseQuery({
     baseUrl: mainUrl,
   }),
-  tagTypes: ["product"],
+  tagTypes: ["products"],
   endpoints: (builder) => ({
     getProduct: builder.query({
-      query: () => "product",
-      providesTags: ["product"],
-    }),
-    getProductByCategory: builder.mutation({
-      query: (category) => ({
-        url: `product?categories=${category}`,
+      query: ({ limit, page, categories }) => ({
+        url: `product?limit=${limit}&page=${page}&&categories=${
+          categories ? categories : ""
+        }`,
         method: "GET",
       }),
+      providesTags: ["products"],
+    }),
+    getProductByCategory: builder.mutation({
+      query: ({ limit, page, categories }) => ({
+        url: `product?limit=${limit}&page=${page}&categories=${categories}`,
+        method: "GET",
+      }),
+      invalidatesTags: ["products"],
     }),
 
     getProductById: builder.query({
       query: (id) => `product/${id}`,
-      providesTags: ["product"],
     }),
+
     createProduct: builder.mutation({
       query: (inputs) => ({
         url: "product",
         method: "POST",
         body: inputs,
       }),
-      invalidatesTags: ["product"],
+      invalidatesTags: ["products"],
     }),
 
     updateProduct: builder.mutation({
@@ -37,14 +44,22 @@ export const productSlice = createApi({
         method: "PUT",
         body: formData,
       }),
-      invalidatesTags: ["product"],
+      invalidatesTags: ["products"],
+    }),
+
+    searchProduct: builder.query({
+      query: (search) => ({
+        url: `product/search?name=${search}`,
+        method: "get",
+      }),
+      invalidatesTags: ["products"],
     }),
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: `product/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["product"],
+      invalidatesTags: ["products"],
     }),
     gallery: builder.mutation({
       query: ({ id, images }) => ({
@@ -52,6 +67,7 @@ export const productSlice = createApi({
         method: "PUT",
         body: images,
       }),
+      invalidatesTags: ["products"],
     }),
   }),
 });
@@ -63,4 +79,5 @@ export const {
   useGetProductByCategoryMutation,
   useLazyGetProductByIdQuery,
   useGalleryMutation,
+  useSearchProductQuery,
 } = productSlice;

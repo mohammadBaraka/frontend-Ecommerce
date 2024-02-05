@@ -8,13 +8,11 @@ import NavList from "./NavList";
 import { useGetTokenQuery, useLogoutMutation } from "@/app/lib/apis/authSlice";
 import Loader from "../Loader/Loader";
 import { msgConfirm, msgSuccess } from "@/utils/handleMessage";
-import { redirect, usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 export default function Nav() {
   const router = useRouter();
-  const path = usePathname();
   const { data, isSuccess, isLoading } = useGetTokenQuery();
   const [logout, { isLoading: logoutLoading }] = useLogoutMutation();
-  if (path === "/dashboard" && !data?.user) return redirect("/404");
 
   const [openNav, setOpenNav] = React.useState(false);
   React.useEffect(() => {

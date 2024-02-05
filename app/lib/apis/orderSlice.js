@@ -1,4 +1,5 @@
-import { mainUrl } from "@/utils/mainUrl";
+import { mainUrl } from "../../../utils/mainUrl";
+
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const orderSlice = createApi({

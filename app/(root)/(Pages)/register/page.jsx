@@ -3,10 +3,10 @@ import Image from "next/image";
 import styles from "./Register.module.css";
 import * as React from "react";
 import Link from "next/link";
-import { useRegisterMutation } from "@/app/lib/apis/authSlice";
-import Loader from "@/Components/Loader/Loader";
-import { msgError, msgSuccess } from "@/utils/handleMessage";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useRegisterMutation } from "../../../lib/apis/authSlice";
+import { msgError, msgSuccess } from "../../../../utils/handleMessage";
+import Loader from "../../../../Components/Loader/Loader";
 export default function Register() {
   const router = useRouter();
   const [register, { isLoading }] = useRegisterMutation();
@@ -43,7 +43,7 @@ export default function Register() {
       {isLoading && <Loader />}
       <section
         className="flex justify-center items-center
-      xl:grid xl:grid-cols-2 xl:w-[90%] m-auto marginGlobal"
+      xl:grid xl:grid-cols-2 xl:w-[90%] m-auto mt-8"
       >
         <form className={styles.form} onSubmit={handleSubmit}>
           <p className={styles.title}>Register </p>

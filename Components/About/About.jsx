@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import { dataSction } from "./sectionData";
 export default function About() {
   return (

@@ -7,20 +7,17 @@
   --hover-color: #45c5c1;
 }
 
-
 .theme {
   transition: all ease-in 0.3s;
 }
 .light {
-
   background-color: #333333;
-  color:#fff
+  color: #fff;
 }
-
 
 .dark {
   background-color: #ffffff;
-  color:#333
+  color: #333;
 }
 
 .marginGlobal {

@@ -4,6 +4,7 @@ import { authSlice } from "./apis/authSlice";
 import { orderSlice } from "./apis/orderSlice";
 import { categoriesSlice } from "./apis/categoriesSlice";
 import { productSlice } from "./apis/productSlice";
+
 export const makeStore = () => {
   return configureStore({
     reducer: {

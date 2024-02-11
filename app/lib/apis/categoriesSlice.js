@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { mainUrl } from "../../../utils/mainUrl";
+import { mainUrl } from "utils/mainUrl";
 
 export const categoriesSlice = createApi({
   reducerPath: "categoriesSlice",

@@ -16,7 +16,7 @@ const KEY = process.env.NEXT_PUBLIC_REACT_APP_KEY;
 export default function Ordering() {
   const dispatch = useAppDispatch();
   const { data: userData, isLoading: loadingData } = useGetTokenQuery();
-  const userId = userData !== undefined ? userData?.userId : null;
+
   const [createOrder, { data, isError, isLoading, isSuccess }] =
     useCreateOrderMutation();
   const carts = useAppSelector((state) => state.cart);
@@ -40,7 +40,7 @@ export default function Ordering() {
     zip: "",
     country: "",
     phone: "",
-    user: userId,
+    user: userData?.userId,
   });
 
   const handleChange = (e) => {
@@ -50,13 +50,12 @@ export default function Ordering() {
       [e.target.name]: e.target.value,
     }));
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     createOrder(inputs).then((res) => {
-      console.log(res);
       if (res?.error?.status === 500)
         return msgError("All Failds Are Reauired");
       dispatch(clear());
-      msgSuccess(res?.data?.message || "Ordering Success!");
+      msgSuccess(res?.data?.message || "Ordering Created Success!");
     });
   };
 

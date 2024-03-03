@@ -74,7 +74,7 @@ export default function Products() {
       <h3 className="text-2xl text-center my-8 font-Bold ">
         Filter By Category
       </h3>
-      <div className=" flex items-center gap-4 w-[95%] border-2 border-teal-400 xl:w-fit px-4 py-2 m-auto rounded-xl">
+      <div className=" flex x items-center gap-4 w-[95%] border-2 border-teal-400 xl:w-fit px-4 py-2 m-auto rounded-xl">
         <div className="w-72">
           <Input
             label="Searc About Product"
@@ -82,7 +82,11 @@ export default function Products() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <div className="grid grid-cols-4 justify-center">
+        <div
+          className="grid grid-cols-1 justify-center
+     md:grid-cols-3 xl:grid-cols-4
+        "
+        >
           <Radio
             defaultChecked
             label="All Products"

@@ -4,11 +4,11 @@ import { XCircleIcon } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
 import { useGetOrderQuery } from "lib/apis/orderSlice";
 export default function Orders() {
-  const { data, isLoading } = useGetOrderQuery(null);
+  const { data: orders, isLoading } = useGetOrderQuery(null);
+  console.log("🚀 ~ Orders ~ orders:", orders?.data);
 
   const [productDeatails, setProductDetails] = React.useState(false);
 
-  console.log(productDeatails);
   return (
     <>
       <div className="flex flex-col justify-center items-center">
@@ -46,37 +46,68 @@ export default function Orders() {
                 </div>
               </div>
 
-              <div className="block w-full overflow-x-auto">
-                <table className="items-center bg-transparent w-full border-collapse text-2xl ">
-                  <thead>
-                    <tr>
-                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-lg uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        ID
-                      </th>
-                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-lg uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Brand
-                      </th>
-                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-lg uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Name
-                      </th>
-                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-lg uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Price
-                      </th>
-                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-lg uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
+              <table className="items-center bg-transparent w-full border-collapse text-2xl ">
+                <thead>
+                  <tr>
+                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-lg uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      ID
+                    </th>
+                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-lg uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      Brand
+                    </th>
+                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-lg uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      Name
+                    </th>
+                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-lg uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      Price
+                    </th>
+                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-lg uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
 
-                  <tbody>
-                    <tr>
-                      <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4 text-left text-blueGray-700">
-                        1
-                      </th>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                <tbody>
+                  {orders?.data?.map((order, index) => {
+                    return (
+                      <tr key={order?.id}>
+                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4 text-left text-blueGray-700">
+                          {index + 1}
+                        </th>
+                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4 text-left text-blueGray-700">
+                          {order?.user?.name ? (
+                            order.user.name
+                          ) : (
+                            <div>
+                              <p className="text-red-500">Not Found</p>
+                            </div>
+                          )}
+                        </th>
+                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4 text-left text-blueGray-700">
+                          {order?.country}
+                        </th>
+                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4 text-left text-blueGray-700">
+                          {order?.city}
+                        </th>
+
+                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4 text-left text-blueGray-700">
+                          {order?.phone}
+                        </th>
+
+                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4 text-left text-blueGray-700">
+                          {order?.shippingAddress1}
+                        </th>
+                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4 text-left text-blueGray-700">
+                          {order?.shippingAddress2}
+                        </th>
+                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4 text-left text-blueGray-700">
+                          {order?.status}
+                        </th>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         </section>

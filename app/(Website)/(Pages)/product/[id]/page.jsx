@@ -2,21 +2,50 @@
 import { useParams } from "next/navigation";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import * as React from "react";
-import { useLazyGetProductByIdQuery } from "lib/apis/productSlice";
 import Loader from "components/Loader/Loader";
+import {
+  useGetProductByIdQuery,
+  useGetProductQuery,
+} from "lib/apis/productSlice";
+import { useGetTokenQuery } from "lib/apis/authSlice";
+import { Button } from "@material-tailwind/react";
+import { msgInfo, msgSuccess } from "utils/handleMessage";
+import { useAppDispatch } from "lib/hooks";
+import { addToCart } from "lib/slices/CartSlise";
+import { useRouter } from "next/navigation";
+import OtherPosts from "./OtherPosts";
+
 export default function ProductDetails() {
-  const [getProductById, { data, isLoading }] = useLazyGetProductByIdQuery();
+  const {
+    data: token,
+    isLoading: userLoading,
+    isError,
+  } = useGetTokenQuery(null);
   const [image, setImage] = React.useState(null);
-  const product = data?.data;
-
   const { id } = useParams();
-
-  React.useEffect(() => {
-    getProductById(id);
-  }, []);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   const showImages = (src) => {
     setImage(src);
   };
+  const loginPage = () => {
+    router.push("/login");
+  };
+  const msgAddToCart = (product) => {
+    dispatch(addToCart(product));
+    msgSuccess("Product Added Success!");
+  };
+  const { data, isLoading } = useGetProductByIdQuery(id);
+  const product = data?.data;
+
+  const { data: categories, isLoading: categoriesLoading } = useGetProductQuery(
+    {
+      limit: 4,
+      page: 1,
+      categories: product?.category?.id,
+    }
+  );
+
   const images = product?.images.map((image, index) => {
     return (
       <img
@@ -43,16 +72,31 @@ export default function ProductDetails() {
                   alt={product?.name}
                 />
               </div>
-              <div className="flex -mx-2 mb-4">
-                <div className="w-1/2 px-2">
-                  <button className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
-                    Add to Cart
-                  </button>
-                </div>
-                <div className="w-1/2 px-2">
-                  <button className="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">
-                    Add to Wishlist
-                  </button>
+              <div className="flex justify-center -mx-2 mb-4">
+                <div className="w-1/2 px-2 ">
+                  {!token?.user && (
+                    <Button
+                      onClick={
+                        isError
+                          ? () =>
+                              msgInfo(
+                                "Unothorized",
+                                "You Should Login To Ordering...",
+                                loginPage
+                              )
+                          : () => msgAddToCart(product)
+                      }
+                      ripple={false}
+                      fullWidth={true}
+                      className="bottom-3 
+                    left-auto w-[90%]
+                     bg-teal-900/10 text-blue-gray-900 shadow-none
+                      hover:scale-105 hover:shadow-none 
+                      focus:scale-105 focus:shadow-none active:scale-100"
+                    >
+                      Add to Cart
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
@@ -119,6 +163,21 @@ export default function ProductDetails() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="my-12">
+        <h3 className="text-center font-bold text-4xl text-primary">
+          Other Product You Like
+        </h3>
+        <section className="mx-auto p-10 md:py-12 px-0 md:p-8 md:px-0 mt-5 w-[100%] md:w-[95%] xl:w-[90%]">
+          <OtherPosts
+            categories={categories}
+            token={token}
+            isError={isError}
+            msgInfo={msgInfo}
+            msgAddToCart={msgAddToCart}
+            loginPage={loginPage}
+          />
+        </section>
       </div>
     </>
   );

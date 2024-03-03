@@ -14,7 +14,6 @@ export default function Nav() {
   const router = useRouter();
   const { data, isSuccess, isLoading } = useGetTokenQuery(null);
   const [logout, { isLoading: logoutLoading }] = useLogoutMutation();
-
   const [openNav, setOpenNav] = React.useState(false);
   React.useEffect(() => {
     window.addEventListener(

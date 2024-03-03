@@ -6,9 +6,8 @@ import { useAppSelector } from "lib/hooks";
 import Link from "next/link";
 
 export default function NavList() {
-  const { data } = useGetTokenQuery();
+  const { data } = useGetTokenQuery(null);
   const cart = useAppSelector((state) => state.cart);
-  console.log("🚀 ~ NavList ~ cart:", cart);
 
   return (
     <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">

@@ -76,7 +76,7 @@ export const {
   useUpdateProductMutation,
   useDeleteProductMutation,
   useGetProductByCategoryMutation,
-  useLazyGetProductByIdQuery,
+  useGetProductByIdQuery,
   useGalleryMutation,
   useSearchProductQuery,
 } = productSlice;

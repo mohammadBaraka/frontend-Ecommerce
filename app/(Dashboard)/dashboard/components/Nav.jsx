@@ -14,7 +14,7 @@ export default function Nav() {
   const activeLink = "bg-gray-300";
   const path = usePathname();
   const { data: user, isLoading } = useGetTokenQuery(null);
-  console.log("🚀 ~ Nav ~ user:", user);
+
   return (
     <div className="flex flex-col gap-5 gb-red-500 fixed shadow-xl min-h-screen w-[15%] left-0 top-0">
       <h2 className="text-sm py-2 font-bold text-white bg-teal-500   xl:text-2xl text-center ">

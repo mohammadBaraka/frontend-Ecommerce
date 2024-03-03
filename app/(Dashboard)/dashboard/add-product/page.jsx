@@ -1,5 +1,9 @@
 "use client";
-import { TrashIcon } from "@heroicons/react/24/solid";
+import {
+  CloudArrowUpIcon,
+  TrashIcon,
+  XCircleIcon,
+} from "@heroicons/react/24/solid";
 import * as React from "react";
 import styles from "./AddProduct.module.css";
 import Table from "./TablesProduct";
@@ -17,7 +21,7 @@ import {
 } from "lib/apis/productSlice";
 import { msgError, msgSuccess } from "utils/handleMessage";
 import Loader from "components/Loader/Loader";
-
+import { handleEdit } from "./events";
 export default function AddProducts() {
   const { data: categories, isLoading } = useGetCategoriesQuery(null);
   const [createProduct, { isLoading: loadingProduct }] =
@@ -28,7 +32,7 @@ export default function AddProducts() {
     useUpdateProductMutation();
   const [gallery, { data: galleries, isLoading: galleryLoading }] =
     useGalleryMutation();
-
+  const [productDeatails, setProductDetails] = React.useState(false);
   const [updateMode, setUpdateMode] = React.useState(false);
   const [moreImages, SetMoreImages] = React.useState([]);
   const [page, setPage] = React.useState(1);
@@ -80,6 +84,7 @@ export default function AddProducts() {
       isFeatured: false,
     });
     SetMoreImages([]);
+    setUpdateMode(false);
   };
 
   const handleSubmit = (e) => {
@@ -100,7 +105,8 @@ export default function AddProducts() {
       updateProduct({ id, formData }).then((res) => {
         if (res?.error?.status === 400)
           return msgError(res?.error?.data.message || "Something went wrong");
-        if (res?.error?.status === 500) return msgError("Plz Select Category");
+        if (res?.error?.status === 500)
+          return msgError(res?.error?.data.message || "Something went wrong");
         msgSuccess(res?.data?.message || "Updated Success");
         setUpdateMode(false);
         handleReset();
@@ -116,36 +122,16 @@ export default function AddProducts() {
       });
     }
   };
-  const handleEdit = (product) => {
-    setUpdateMode(true);
+
+  //?UPLOAD MORE IMAGES(GALLERY)
+  const setPorductId = (product) => {
     setInputs({
       id: product.id || "",
-      name: product.name || "",
-      description: product.description || "",
-      richDescription: product.richDescription || "",
-      image: product.image || null,
-      brand: product.brand || "",
-      price: product.price || 0,
-      category: product.category?.id || "",
-      countInstock: product.countInstock || 0,
-      isFeatured: product.isFeatured || false,
       images: product.images || [],
     });
-    SetMoreImages([...product.images]);
-    scroll({
-      top: 0,
-      behavior: "smooth",
-    });
+    SetMoreImages(product?.images);
   };
 
-  const handleDelete = (id) => {
-    deleteProduct(id).then((res) => {
-      if (res?.error?.status === 400)
-        return msgError(res?.error?.data.message || "Something went wrong");
-      msgSuccess(res?.data?.message || "Product deleted successfully");
-      handleReset();
-    });
-  };
   const hndleUploadMoreImages = () => {
     const images = new FormData();
     for (let i = 0; i < moreImages.length; i++) {
@@ -155,6 +141,8 @@ export default function AddProducts() {
       if (res?.error?.status === 400)
         return msgError(res?.error?.data.message || "Something went wrong");
       msgSuccess(res?.data?.message || "Images uploaded successfully");
+      SetMoreImages([]);
+      setProductDetails(false);
     });
   };
   const spliceImages = (index) => {
@@ -179,12 +167,12 @@ export default function AddProducts() {
       </div>
     );
   });
-
   return (
     <>
       {isLoading ||
       loadingProduct ||
       deletedLoading ||
+      loadingProucts ||
       updateLoading ||
       galleryLoading ? (
         <Loader />
@@ -192,6 +180,48 @@ export default function AddProducts() {
 
       <div className="flex flex-row justify-center items-center">
         <section className="flex flex-col items-center justify-center xl:flex xl:flex-row xl:justify-between xl:items-center">
+          <div
+            className={`w-[80%] xl:w-[40%] h-auto xl:left-[40%]  bg-white shadow-2xl text-white fixed p-6  ${
+              productDeatails ? "top-40" : "-top-[100%]"
+            } transition-all  duration-1000 z-40`}
+          >
+            <div className="mt-10">
+              <label className={styles.custum_file_upload} htmlFor="images">
+                <div className={styles.icon}>
+                  <CloudArrowUpIcon />
+                </div>
+                <div className={styles.text}>
+                  <span>Upload More Images</span>
+                </div>
+                <input
+                  type="file"
+                  id="images"
+                  name="files"
+                  multiple
+                  onChange={(e) => SetMoreImages([...e.target.files])}
+                />
+              </label>
+              <Button
+                color="teal"
+                className="mt-2 w-full flex items-center justify-center gap-3 text-md font-bold"
+                onClick={hndleUploadMoreImages}
+              >
+                Upload Images <CloudArrowUpIcon className="w-8" />
+              </Button>
+
+              {moreImages?.length > 0 && (
+                <div className="flex flex-col gap-2 mt-4">
+                  <h2 className="text-gray-600 font-bold">More Images</h2>
+
+                  <div className="flex items-center gap-4">{imagesShow}</div>
+                </div>
+              )}
+            </div>
+            <XCircleIcon
+              className="w-9 h-w-9 absolute top-0 right-0 cursor-pointer text-red-300"
+              onClick={() => setProductDetails(false)}
+            />
+          </div>
           <form className={styles.form} onSubmit={handleSubmit}>
             {/*//?======================Inputs====================== */}
             <Inputs
@@ -205,8 +235,6 @@ export default function AddProducts() {
               changeImages={(e) => SetMoreImages([...e.target.files])}
               handleChange={handleChange}
             />
-
-            <Button onClick={hndleUploadMoreImages}>Upload</Button>
 
             {inputs?.image?.type ? (
               <div className="flex flex-col justify-start gap-2 ">
@@ -231,14 +259,6 @@ export default function AddProducts() {
                 </div>
               )
             )}
-
-            {moreImages?.length > 0 && (
-              <div className="flex flex-col gap-2">
-                <h2 className="text-gray-600 font-bold">More Images</h2>
-
-                <div className="flex items-center gap-4">{imagesShow}</div>
-              </div>
-            )}
           </form>
         </section>
         {/*//?======================TABLE====================== */}
@@ -246,11 +266,15 @@ export default function AddProducts() {
       <Table
         products={productsData?.data}
         handleEdit={handleEdit}
-        handleDelete={handleDelete}
         totalProducts={productsData?.totalProducts}
         handleReset={handleReset}
         setPage={setPage}
         setLimit={setLimit}
+        setProuductDetails={setProductDetails}
+        setProductId={setPorductId}
+        setInputs={setInputs}
+        setUpdateMode={setUpdateMode}
+        deleteProduct={deleteProduct}
       />
     </>
   );

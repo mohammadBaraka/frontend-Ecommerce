@@ -35,7 +35,7 @@ const renderCustomizedLabel = ({
   );
 };
 
-export default function () {
+export default function BieChart() {
   return (
     <div className="w-full h-full bg-white shadow-xl rounded-md">
       <div className="flex gap-6 items-center justify-center p-4 bg-gray-800 mb-5">

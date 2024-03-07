@@ -49,11 +49,10 @@ export default function ProductDetails() {
 
   const images = product?.images.map((image, index) => {
     return (
-      <div className="cursor-pointer rounded-full">
+      <div className="cursor-pointer rounded-full" key={index}>
         <Image
           src={image}
           alt={product.name}
-          key={index}
           width={100}
           height={100}
           onClick={() => showImages(image)}

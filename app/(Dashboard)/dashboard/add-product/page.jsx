@@ -22,6 +22,7 @@ import {
 import { msgError, msgSuccess } from "utils/handleMessage";
 import Loader from "components/Loader/Loader";
 import { handleEdit } from "./events";
+import Image from "next/image";
 export default function AddProducts() {
   const { data: categories, isLoading } = useGetCategoriesQuery(null);
   const [createProduct, { isLoading: loadingProduct }] =
@@ -152,18 +153,17 @@ export default function AddProducts() {
   const imagesShow = moreImages?.map((image, index) => {
     return image?.type ? (
       <div className="relative" key={index}>
-        <img
-          className="w-24 h-24 rounded-md"
-          src={URL.createObjectURL(image)}
-        />
+        <div className="relative w-24 h-24 rounded-md">
+          <Image src={URL.createObjectURL(image)} alt="Image Url" fill />
+        </div>
         <TrashIcon
           className="w-6 h-w-6 text-red-400 absolute top-0 right-0 cursor-pointer"
           onClick={() => spliceImages(index)}
         />
       </div>
     ) : (
-      <div key={index}>
-        <img className="w-24 h-24 rounded-md" src={image} />
+      <div key={index} className="relative w-24 h-24 rounded-md">
+        <Image src={image} alt="Image Url" fill />
       </div>
     );
   });
@@ -239,23 +239,21 @@ export default function AddProducts() {
             {inputs?.image?.type ? (
               <div className="flex flex-col justify-start gap-2 ">
                 <h2 className="text-gray-600 font-bold">Main Image</h2>
-                <img
-                  src={URL.createObjectURL(inputs?.image)}
-                  alt="mainImage"
-                  loading="lazy"
-                  className="rounded-xl w-24 h-24"
-                />
+                <div className="relative rounded-xl w-24 h-24">
+                  <Image
+                    src={URL.createObjectURL(inputs?.image)}
+                    alt="mainImage"
+                    fill
+                  />
+                </div>
               </div>
             ) : (
               inputs?.image && (
                 <div className="flex flex-col justify-start gap-2 ">
                   <h2 className="text-gray-600 font-bold">Main Image</h2>
-                  <img
-                    src={inputs.image}
-                    alt="mainImage"
-                    loading="lazy"
-                    className="rounded-xl w-24 h-24"
-                  />
+                  <div className="relative rounded-xl w-24 h-24">
+                    <Image src={inputs.image} alt="mainImage" fill />
+                  </div>
                 </div>
               )
             )}

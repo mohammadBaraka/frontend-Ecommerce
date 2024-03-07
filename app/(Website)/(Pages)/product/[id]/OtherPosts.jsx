@@ -6,6 +6,7 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import Image from "next/image";
 import Link from "next/link";
 export default function OtherPosts({
   categories,
@@ -22,11 +23,9 @@ export default function OtherPosts({
           <Card className="w-[100%] h-[100%] relative" key={product?.id}>
             <CardHeader shadow={false} floated={false} className="h-96">
               <Link href={`/product/${product.id}`}>
-                <img
-                  src={product?.image}
-                  alt={product?.name}
-                  className="h-full w-full"
-                />
+                <div className="relative h-full w-full">
+                  <Image src={product?.image} alt={product?.name} fill />
+                </div>
               </Link>
             </CardHeader>
             <CardBody>

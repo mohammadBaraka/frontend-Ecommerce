@@ -14,6 +14,7 @@ import { useAppDispatch } from "lib/hooks";
 import { addToCart } from "lib/slices/CartSlise";
 import { useRouter } from "next/navigation";
 import OtherPosts from "./OtherPosts";
+import Image from "next/image";
 
 export default function ProductDetails() {
   const {
@@ -48,32 +49,35 @@ export default function ProductDetails() {
 
   const images = product?.images.map((image, index) => {
     return (
-      <img
-        src={image}
-        alt={product.name}
-        key={index}
-        className="w-16 h-16 rounded-full cursor-pointer"
-        onClick={() => showImages(image)}
-      />
+      <div className="cursor-pointer rounded-full">
+        <Image
+          src={image}
+          alt={product.name}
+          key={index}
+          width={100}
+          height={100}
+          onClick={() => showImages(image)}
+        />
+      </div>
     );
   });
 
   return (
     <>
-      {isLoading && <Loader />}
-      <div className="bg-transparent dark:bg-transparent py-8 border-2 darK:border-white marginGlobal w-[95%] m-auto">
+      {isLoading || (categoriesLoading && <Loader />)}
+      <div className="bg-transparent dark:bg-transparent py-8 border-2 darK:border-white marginGlobal w-[95%] m-auto ">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row -mx-4 justify-between">
             <div className="md:flex-1 px-4">
-              <div className="h-[560px] rounded-lg light:bg-white dark:bg-gray-700 mb-4">
-                <img
-                  className="w-full h-full"
+              <div className="relative w-full h-[400px] rounded-full light:bg-white dark:bg-gray-700 mb-20 mr-5 ">
+                <Image
                   src={image === null ? product?.image : image}
                   alt={product?.name}
+                  fill
                 />
               </div>
               <div className="flex justify-center -mx-2 mb-4">
-                <div className="w-1/2 px-2 ">
+                <div className="relative w-1/2 px-2 ">
                   {!token?.user && (
                     <Button
                       onClick={
@@ -88,8 +92,10 @@ export default function ProductDetails() {
                       }
                       ripple={false}
                       fullWidth={true}
-                      className="bottom-3 
-                    left-auto w-[90%]
+                      className="
+                      absolute right-auto
+                      bottom-0
+                     left-auto  w-[90%]
                      bg-teal-900/10 text-blue-gray-900 shadow-none
                       hover:scale-105 hover:shadow-none 
                       focus:scale-105 focus:shadow-none active:scale-100"
@@ -100,7 +106,7 @@ export default function ProductDetails() {
                 </div>
               </div>
             </div>
-            <div className="md:flex-1 px-4">
+            <div className="md:flex-1 px-4 ml-20">
               <div className="flex gap-2 items-center mb-4">
                 <h2 className="font-bold text-gray-700">Product Name:</h2>
                 <p className="text-lg text-primary font-bold">
@@ -129,7 +135,7 @@ export default function ProductDetails() {
                   )}
                 </div>
               </div>
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <span className="font-bold text-gray-700 ">More Images:</span>
                 <div className="flex items-center mt-2">
                   <button className="w-6 h-6 rounded-full bg-gray-800 dark:bg-gray-200 mr-2"></button>
@@ -137,18 +143,21 @@ export default function ProductDetails() {
                   <button className="w-6 h-6 rounded-full bg-blue-500 dark:bg-blue-700 mr-2"></button>
                   <button className="w-6 h-6 rounded-full bg-yellow-500 dark:bg-yellow-700 mr-2"></button>
                 </div>
-              </div>
+              </div> */}
               <div className="mb-4">
-                <span className="font-bold text-gray-700 dark:text-gray-300">
-                  Select Size:
+                <span className="font-bold text-gray-900 dark:text-gray-600 text-xl">
+                  More Images
                 </span>
-                <div className="flex items-center mt-2 gap-4">
-                  <img
-                    className="w-16 h-16 rounded-full cursor-pointer"
-                    src={product?.image}
-                    alt={product?.name}
-                    onClick={() => setImage(product.image)}
-                  />
+                <div className="flex justify-start items-center mt-2 gap-4 w-full">
+                  <div className="rounded-full cursor-pointer">
+                    <Image
+                      src={product?.image}
+                      alt={product?.name}
+                      onClick={() => setImage(product.image)}
+                      width={100}
+                      height={100}
+                    />
+                  </div>
                   {images}
                 </div>
               </div>

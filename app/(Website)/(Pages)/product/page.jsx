@@ -25,6 +25,7 @@ import {
 } from "lib/apis/productSlice";
 import PaginatedItems from "utils/Paginate";
 import Loader from "components/Loader/Loader";
+import Image from "next/image";
 
 export default function Products() {
   const router = useRouter();
@@ -136,11 +137,9 @@ export default function Products() {
                 <Card className="w-[100%] h-[100%] relative" key={product?.id}>
                   <CardHeader shadow={false} floated={false} className="h-96">
                     <Link href={`/product/${product.id}`}>
-                      <img
-                        src={product?.image}
-                        alt={product?.name}
-                        className="h-full w-full"
-                      />
+                      <div className="h-full w-full">
+                        <Image src={product?.image} alt={product?.name} fill />
+                      </div>
                     </Link>
                   </CardHeader>
                   <CardBody>

@@ -5,6 +5,7 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import { msgConfirm } from "utils/handleMessage";
 import { Button } from "@material-tailwind/react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Cart() {
   const carts = useAppSelector((state) => state.cart);
@@ -45,11 +46,9 @@ export default function Cart() {
                 {carts?.map((cart, index) => {
                   return (
                     <li className="flex items-center gap-4" key={cart.id}>
-                      <img
-                        src={cart?.image}
-                        alt={cart?.name}
-                        className="h-16 w-16 rounded object-cover"
-                      />
+                      <div className="relative h-16 w-16 rounded object-cover">
+                        <Image src={cart?.image} alt={cart?.name} fill />
+                      </div>
 
                       <div>
                         <h3 className="text-lg text-gray-900">{cart.name}</h3>
@@ -96,7 +95,7 @@ export default function Cart() {
                 <div className="mt-8 flex justify-end border-t border-gray-100 pt-8">
                   <div className="w-screen max-w-lg space-y-4">
                     <dl className="space-y-0.5 text-sm text-gray-700">
-                      <div className="flex justify-between !text-base font-medium">
+                      <div className="flex justify-end gap-2 font-bold text-2xl">
                         <dt>Total Price</dt>
                         <dd>{totalPrice} $</dd>
                       </div>

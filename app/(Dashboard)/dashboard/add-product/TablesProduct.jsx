@@ -10,6 +10,7 @@ import Link from "next/link";
 import PaginatedItems from "utils/Paginate";
 import { Select, Option } from "@material-tailwind/react";
 import { handleEdit, handleDelete } from "./events";
+import Image from "next/image";
 export default function Table({
   products,
   handleReset,
@@ -110,22 +111,29 @@ export default function Table({
                         </th>
 
                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4 text-center text-blueGray-700">
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="rounded-full p-2 w-16 h-16 border-spacing-3 border-2 border-blueGray-700"
-                          />
+                          <div className="relative rounded-full  p-2 w-16 h-16 border-spacing-3 border-2 border-blueGray-700">
+                            <Image
+                              src={product.image}
+                              alt={product.name}
+                              fill
+                              className="rounded-full"
+                            />
+                          </div>
                         </th>
 
                         {product?.images?.length > 0 ? (
                           <th className="flex border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap p-4 text-center text-blueGray-700">
                             {product?.images.map((img, index) => {
                               return (
-                                <div className="" key={index}>
-                                  <img
+                                <div
+                                  className="relative rounded-full p-2 w-12 h-12 border-spacing-3 border-2 border-blueGray-700"
+                                  key={index}
+                                >
+                                  <Image
                                     src={img}
                                     alt={product?.name}
-                                    className="rounded-full p-2 w-12 h-12 border-spacing-3 border-2 border-blueGray-700"
+                                    fill
+                                    className="rounded-full"
                                   />
                                 </div>
                               );

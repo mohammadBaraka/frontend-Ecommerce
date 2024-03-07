@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./Landing.module.css";
+import Image from "next/image";
 export default function Landing() {
   return (
     <div className="w-[100%] m-auto  xl:w-[90%] marginGlobal xl:shadow-2xl px-8 py-4">
@@ -24,7 +25,13 @@ export default function Landing() {
           </Link>
         </div>
         <div className="xl:w-[100%]">
-          <img src="/images/shopping.svg" alt="Shopping" />
+          {/* <img src="/images/shopping.svg" alt="Shopping" /> */}
+          <Image
+            src="/images/shopping.svg"
+            width={600}
+            height={600}
+            alt="Shopping Image"
+          />
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 "use client";
-import { ThemeContext } from "@/Context/ToggleMode";
+import { ThemeContext } from "Context/ToggleMode";
 import styles from "./Toggle.module.css";
 import * as React from "react";
 export default function ToggleSwitch() {

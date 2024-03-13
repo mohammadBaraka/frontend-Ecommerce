@@ -9,8 +9,11 @@ import { useGetTokenQuery, useLogoutMutation } from "lib/apis/authSlice";
 import NavList from "./NavList";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Navbar, Collapse, Button, IconButton } from "@material-tailwind/react";
+import ToggleSwitch from "components/ToggleSwitch/ToggleSwitch";
+import { ThemeContext } from "Context/ToggleMode";
 
 export default function Nav() {
+  const { mode, toggle } = React.useContext(ThemeContext);
   const router = useRouter();
   const { data, isSuccess, isLoading } = useGetTokenQuery(null);
   const [logout, { isLoading: logoutLoading }] = useLogoutMutation();
@@ -35,8 +38,14 @@ export default function Nav() {
       {isLoading || logoutLoading ? <Loader /> : null}
 
       <div>
-        <Navbar className="mx-auto max-w-[100%] px-4 py-2">
-          <div className="flex items-center justify-between text-blue-gray-900 px-4">
+        <Navbar
+          className={`mx-auto max-w-[100%] px-4 py-2 bg-transparent ${
+            mode === "light"
+              ? "border-gray-800 shadow-xs shadow-gray-800"
+              : "border-white"
+          }`}
+        >
+          <div className="flex items-center justify-between  px-4">
             <Link href="/">
               <h6 className="mr-4 cursor-pointer py-1.5 lg:ml-2">
                 <Image
@@ -52,7 +61,8 @@ export default function Nav() {
               <NavList />
             </div>
             {isSuccess ? (
-              <div className="hidden gap-2 lg:flex">
+              <div className="hidden gap-2 lg:flex lg:items-center">
+                <ToggleSwitch />
                 {data?.user && isSuccess && (
                   <Link href="/dashboard">
                     <Button variant="outlined" size="md" color="teal" fullWidth>
@@ -102,6 +112,7 @@ export default function Nav() {
             <NavList />
             {isSuccess ? (
               <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
+                <ToggleSwitch />
                 {data?.user && isSuccess && (
                   <Link href="/dashboard">
                     <Button variant="outlined" size="sm" color="teal" fullWidth>

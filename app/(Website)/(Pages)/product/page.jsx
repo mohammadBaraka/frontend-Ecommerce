@@ -181,7 +181,7 @@ export default function Products() {
                         ripple={false}
                         fullWidth={true}
                         className="absolute bottom-3 
-                    left-auto w-[90%]
+                    right-3  w-[90%]
                      bg-teal-900/10 text-blue-gray-900 shadow-none
                       hover:scale-105 hover:shadow-none 
                       focus:scale-105 focus:shadow-none active:scale-100"

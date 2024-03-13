@@ -20,12 +20,11 @@ export default function Landing() {
 
           <Link href="/">
             <button className={`${styles.button}`}>
-              <p>Get Stared</p>
+              <p> Shop now</p>
             </button>
           </Link>
         </div>
         <div className="xl:w-[100%]">
-          {/* <img src="/images/shopping.svg" alt="Shopping" /> */}
           <Image
             src="/images/shopping.svg"
             width={600}

@@ -19,7 +19,7 @@ export default function Services() {
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
              felis ligula.`,
-      img: "/images/about-1.jpg",
+      img: "/images/shopping2.jpg",
     },
 
     {
@@ -29,18 +29,18 @@ export default function Services() {
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
     felis ligula.`,
-      img: "/images/about-1.jpg",
+      img: "/images/shopping3.jpg",
     },
   ];
   return (
     <>
       <h3 className="text-4xl text-center font-bold marginGlobal">Services</h3>
-      <section className="grid grid-cols-1 w-[100%]  xl:w-[90%] m-auto md:grid md:grid-cols-2 xl:grid xl:grid-cols-3">
+      <section className="grid grid-cols-1 gap-8 w-[100%]  xl:w-[90%] m-auto md:grid md:grid-cols-2 xl:grid xl:grid-cols-3">
         {dataServices?.map((item) => {
           return (
             <div key={item.id} className="marginGlobal relative mb-4">
-              <div className="relative h-auto mx-6 -mt-6 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-teal-500 to-teal-600">
-                <Image src={item.img} alt="image" width={600} height={200} />
+              <div className="relative w-full h-[300px]  mx-6 -mt-6 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-teal-500 to-teal-600">
+                <Image src={item.img} alt="image" fill />
               </div>
               <div className="p-6">
                 <h5 className="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">

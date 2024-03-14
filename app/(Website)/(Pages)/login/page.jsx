@@ -39,7 +39,7 @@ export default function Register() {
       {/* Validatin For Login Mutation  */}
       {isLoading && <Loader />}
       <section
-        className="flex justify-center items-center m-auto w-[100%] marginGlobal
+        className="flex justify-center items-center m-auto w-[100%] px-4 marginGlobal
        xl:grid xl:grid-cols-2 xl:w-[90%] min-h-screen"
       >
         <form className={`${styles.form} w-[100%]`} onSubmit={handleSubmit}>

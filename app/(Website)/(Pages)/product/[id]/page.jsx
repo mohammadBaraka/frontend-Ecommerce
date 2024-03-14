@@ -113,7 +113,7 @@ export default function ProductDetails() {
                   {product?.name}
                 </p>
               </div>
-              <div className="flex  mb-4">
+              <div className="flex flex-col gap-4  mb-4">
                 <div className="mr-4">
                   <span className="font-bold text-gray-700 ">Price: </span>
                   <span className="text-primary text-lg font-bold ">

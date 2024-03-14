@@ -63,7 +63,7 @@ export default function Ordering() {
     <>
       {isLoading || loadingData ? <Loader /> : null}
       {carts.length > 0 ? (
-        <section className="flex justify-center items-center marginGlobal">
+        <section className="flex justify-center items-center p-4 min-h-screen marginGlobal">
           <form className={styles.form} onClick={(e) => e.preventDefault()}>
             <p className={styles.title}>Ordering </p>
             <p className={styles.message}>Cash On Deleviry</p>
@@ -140,7 +140,7 @@ export default function Ordering() {
 
             <StripeCheckout
               name="E-commerce"
-              image={"/static/images/logo.png"}
+              image={"/logo.png"}
               currncy="USD"
               amount={totalPrice * 100}
               stripeKey={KEY}

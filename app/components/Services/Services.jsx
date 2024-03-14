@@ -35,7 +35,7 @@ export default function Services() {
   return (
     <>
       <h3 className="text-4xl text-center font-bold marginGlobal">Services</h3>
-      <section className="grid grid-cols-1 gap-8 w-[100%]  xl:w-[90%] m-auto md:grid md:grid-cols-2 xl:grid xl:grid-cols-3">
+      <section className="grid grid-cols-1 gap-8 w-[90%] mr-[250px] xl:w-[90%] m-auto md:grid md:grid-cols-2 xl:grid xl:grid-cols-3">
         {dataServices?.map((item) => {
           return (
             <div key={item.id} className="marginGlobal relative mb-4">

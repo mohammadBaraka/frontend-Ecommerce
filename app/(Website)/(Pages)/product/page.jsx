@@ -78,7 +78,7 @@ export default function Products() {
       <div className=" flex x items-center gap-4 w-[95%] border-2 border-teal-400 xl:w-fit px-4 py-2 m-auto rounded-xl">
         <div className="w-72">
           <Input
-            label="Searc About Product"
+            label="Search About Product"
             color="teal"
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -201,7 +201,7 @@ export default function Products() {
             </p>
           </div>
         )}
-        <div className="flex justify-center items-center gap-6 mt-8">
+        <div className="flex justify-center items-center gap-6 mt-8 px-4">
           <div className="flex w-72 flex-col gap-6 text-xl">
             <Select
               onChange={(e) => setLimit(+e)} // Call handleLimitChange when the select value changes

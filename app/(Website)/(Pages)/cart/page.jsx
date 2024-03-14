@@ -23,8 +23,8 @@ export default function Cart() {
   return (
     <div>
       <section className="">
-        <div className="mx-auto mt-5 max-w-screen-xl px-4 py-8  sm:px-6 sm:py-12 lg:px-8  border-2 border-primary ">
-          <div className="mx-auto max-w-3xl">
+        <div className="mx-auto mt-5 max-w-screen-xl p-8 sm:px-6 sm:py-12 lg:px-8   min-h-screen">
+          <div className="mx-auto max-w-3xl border-2 border-primary p-8">
             <header className="text-center">
               <h1 className="text-xl font-bold text-gray-900 sm:text-3xl">
                 {`Your Cart (${carts?.length})`}

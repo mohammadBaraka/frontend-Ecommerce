@@ -35,14 +35,31 @@ export default function Services() {
   return (
     <>
       <h3 className="text-4xl text-center font-bold marginGlobal">Services</h3>
-      <section className="grid grid-cols-1 gap-8 w-[90%] mr-[250px] xl:w-[90%] m-auto md:grid md:grid-cols-2 xl:grid xl:grid-cols-3">
+      <p className="text-center px-4 mt-4 ">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus vitae,
+        deleniti doloremque et dolor esse laborum ipsa excepturi corporis sed
+        reiciendis fuga eligendi laudantium, consequuntur accusamus architecto
+        hic! Ex, omnis.
+      </p>
+      <section
+        className="w-[90%] m-auto lg:grid lg:grid-cols-3 lg:gap-8 
+       md:grid md:grid-cols-2 md:gap-8
+      "
+      >
         {dataServices?.map((item) => {
           return (
-            <div key={item.id} className="marginGlobal relative mb-4">
-              <div className="relative w-full h-[300px]  mx-6 -mt-6 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-teal-500 to-teal-600">
+            <div
+              key={item.id}
+              className="marginGlobal relative  flex items-center flex-col"
+            >
+              <div
+                className="relative w-full h-[300px]  mx-6 -mt-6 overflow-hidden
+              rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg 
+              shadow-blue-gray-500/40 bg-gradient-to-r from-teal-500 to-teal-600"
+              >
                 <Image src={item.img} alt="image" fill />
               </div>
-              <div className="p-6">
+              <div className="p-6 flex flex-col">
                 <h5 className="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
                   {item.title}
                 </h5>

@@ -34,13 +34,14 @@ export default function Services() {
   ];
   return (
     <>
-      <h3 className="text-4xl text-center font-bold marginGlobal">Services</h3>
-      <p className="text-center px-4 mt-4 ">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus vitae,
-        deleniti doloremque et dolor esse laborum ipsa excepturi corporis sed
-        reiciendis fuga eligendi laudantium, consequuntur accusamus architecto
-        hic! Ex, omnis.
-      </p>
+      <div className="mx-auto max-w-lg text-center">
+        <h2 className="text-3xl font-bold sm:text-4xl">About Our Services</h2>
+        <p className="mt-4">
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur
+          aliquam doloribus nesciunt eos fugiat. Vitae aperiam fugit
+          consequuntur saepe laborum.
+        </p>
+      </div>
       <section
         className="w-[90%] m-auto lg:grid lg:grid-cols-3 lg:gap-8 
        md:grid md:grid-cols-2 md:gap-8

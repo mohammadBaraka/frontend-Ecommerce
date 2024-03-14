@@ -48,12 +48,7 @@ export default function Nav() {
           <div className="flex items-center justify-between  px-4">
             <Link href="/">
               <h6 className="mr-4 cursor-pointer py-1.5 lg:ml-2">
-                <Image
-                  src={"/static/images/logo.png"}
-                  alt="logo"
-                  width={50}
-                  height={50}
-                />
+                <Image src={"/logo.png"} alt="logo" width={50} height={50} />
               </h6>
             </Link>
 

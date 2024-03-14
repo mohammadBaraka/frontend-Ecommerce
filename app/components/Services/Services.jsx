@@ -9,7 +9,7 @@ export default function Services() {
       des: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
               felis ligula.`,
-      img: "/static/images/about-1.jpg",
+      img: "/about-1.jpg",
     },
 
     {
@@ -19,7 +19,7 @@ export default function Services() {
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
              felis ligula.`,
-      img: "/static/images/shopping2.jpg",
+      img: "/shopping2.jpg",
     },
 
     {
@@ -29,7 +29,7 @@ export default function Services() {
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
     felis ligula.`,
-      img: "/static/images/shopping3.jpg",
+      img: "/shopping3.jpg",
     },
   ];
   return (

@@ -8,7 +8,7 @@ export default function Footer() {
           <Image
             width={100}
             height={100}
-            src={"/static/images/logo.png"}
+            src={"/logo.png"}
             alt="image shopping"
           />
         </div>

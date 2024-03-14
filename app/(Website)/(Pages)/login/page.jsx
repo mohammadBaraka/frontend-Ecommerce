@@ -77,12 +77,7 @@ export default function Register() {
           </p>
         </form>
         <div className="hidden xl:flex">
-          <Image
-            src={"/static/images/login.svg"}
-            alt="signup"
-            width={800}
-            height={800}
-          />
+          <Image src={"/login.svg"} alt="signup" width={800} height={800} />
         </div>
       </section>
     </>

@@ -49,7 +49,7 @@ export default function Nav() {
             <Link href="/">
               <h6 className="mr-4 cursor-pointer py-1.5 lg:ml-2">
                 <Image
-                  src="/images/logo.png"
+                  src={"/static/images/logo.png"}
                   alt="logo"
                   width={50}
                   height={50}
@@ -82,7 +82,8 @@ export default function Nav() {
                 </Button>
               </div>
             ) : (
-              <div className="hidden gap-2 lg:flex">
+              <div className="hidden gap-2 lg:flex lg:items-center">
+                <ToggleSwitch />
                 <Link href="/login">
                   <Button variant="outlined" size="md" color="red" fullWidth>
                     Log In
@@ -90,7 +91,7 @@ export default function Nav() {
                 </Link>
                 <Link href="/register">
                   <Button variant="gradient" size="md" color="teal" fullWidth>
-                    Sign In
+                    Sign Up
                   </Button>
                 </Link>
               </div>
@@ -135,6 +136,7 @@ export default function Nav() {
               </div>
             ) : (
               <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
+                <ToggleSwitch />
                 <Link href="/login">
                   <Button variant="outlined" size="sm" color="red" fullWidth>
                     Log In
@@ -142,7 +144,7 @@ export default function Nav() {
                 </Link>
                 <Link href="/register">
                   <Button variant="gradient" size="sm" color="teal" fullWidth>
-                    Sign In
+                    Sign Up
                   </Button>
                 </Link>
               </div>

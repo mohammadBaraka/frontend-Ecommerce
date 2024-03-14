@@ -64,7 +64,8 @@ export default function ProductDetails() {
   return (
     <>
       {isLoading || (categoriesLoading && <Loader />)}
-      <div className="bg-transparent dark:bg-transparent py-8 border-2 darK:border-white marginGlobal w-[95%] m-auto ">
+
+      <div className="bg-transparent dark:bg-transparent py-8 border-2 darK:border-white marginGlobal w-[95%] m-auto min-h-">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row -mx-4 justify-between">
             <div className="md:flex-1 px-4">
@@ -176,7 +177,7 @@ export default function ProductDetails() {
         <h3 className="text-center font-bold text-4xl text-primary">
           Other Product You Like
         </h3>
-        <section className="mx-auto p-10 md:py-12 px-0 md:p-8 md:px-0 mt-5 w-[100%] md:w-[95%] xl:w-[90%]">
+        <section className="mx-auto p-10 md:py-12 px-0 md:p-8 md:px-0 mt-5 w-[100%] md:w-[95%] xl:w-[90%] min-h-screen">
           <OtherPosts
             categories={categories}
             token={token}

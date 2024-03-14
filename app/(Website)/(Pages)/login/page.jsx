@@ -40,7 +40,7 @@ export default function Register() {
       {isLoading && <Loader />}
       <section
         className="flex justify-center items-center m-auto w-[100%] marginGlobal
-       xl:grid xl:grid-cols-2 xl:w-[90%] "
+       xl:grid xl:grid-cols-2 xl:w-[90%] min-h-screen"
       >
         <form className={`${styles.form} w-[100%]`} onSubmit={handleSubmit}>
           <p className={styles.title}>Login </p>
@@ -78,7 +78,7 @@ export default function Register() {
         </form>
         <div className="hidden xl:flex">
           <Image
-            src="/images/login.svg"
+            src={"/static/images/login.svg"}
             alt="signup"
             width={800}
             height={800}

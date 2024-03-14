@@ -26,7 +26,7 @@ export default function Landing() {
         </div>
         <div className="xl:w-[100%]">
           <Image
-            src="/images/shopping.svg"
+            src={"/static/images/shopping.svg"}
             width={600}
             height={600}
             alt="Shopping Image"

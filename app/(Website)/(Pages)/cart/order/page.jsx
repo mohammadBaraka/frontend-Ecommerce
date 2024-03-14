@@ -140,7 +140,7 @@ export default function Ordering() {
 
             <StripeCheckout
               name="E-commerce"
-              image="/images/logo.png"
+              image={"/static/images/logo.png"}
               currncy="USD"
               amount={totalPrice * 100}
               stripeKey={KEY}
